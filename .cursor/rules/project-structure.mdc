@@ -1,0 +1,12 @@
+---
+description: be is Sanity CMS and fe is the Next.js site
+alwaysApply: true
+---
+
+# Project layout
+
+- `be/` is the Sanity CMS studio. Project ID `y3pnsf4w`. Organization ID `og6ghze5v`. Dataset name is `production` unless the user says otherwise.
+- `fe/` is the Next.js site (App Router). Pages, CSS, and screen behavior live here.
+- Do not add a separate static HTML site at the repo root.
+- The user is a designer. Explain in plain Korean. HTML and CSS can be named as-is.
+- Do not invent Sanity schema fields. Ask which content they want to edit before writing schema types.

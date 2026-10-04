@@ -1,0 +1,437 @@
+/* 공통 ------------------------------------------------ */
+:root {
+  --pink: #e7b7c4;
+  --black: #111111;
+  --white: #ffffff;
+  --gray: #d9d9d9;
+  --text: #1a1a1a;
+  --margin: 16px;
+  --gutter: 16px;
+  --columns: 12;
+  /* 한 칸의 너비. 화면 너비에서 좌우 margin과 칸 사이 gutter 11개를 뺀 뒤 12로 나눈다. */
+  --column: calc((100% - 2 * var(--margin) - 11 * var(--gutter)) / var(--columns));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background: var(--white);
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 16px;
+  line-height: 138%;
+}
+
+h1,
+button {
+  font-size: inherit;
+  font-weight: 400;
+  line-height: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* 12 columns, margin 16px, gutter 16px */
+.layout {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  column-gap: var(--gutter);
+  padding-inline: var(--margin);
+}
+
+/* 헤더 ------------------------------------------------ */
+.site-header {
+  position: relative;
+  align-items: center;
+  height: 48px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.site-title,
+.page-title,
+.exhibition-dates,
+.site-nav a {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 138%;
+}
+
+.site-intro {
+  grid-column: 1 / 5;
+}
+
+.page-home .site-nav {
+  grid-column: 5 / 9;
+}
+
+.site-title {
+  grid-column: 1 / 5;
+  grid-row: 1;
+}
+
+.page-title {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  text-align: center;
+  pointer-events: none;
+}
+
+.menu-button {
+  position: relative;
+  grid-column: 12;
+  grid-row: 1;
+  justify-self: end;
+  align-self: center;
+  z-index: 4;
+  width: 28px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.menu-icon,
+.menu-icon::before,
+.menu-icon::after {
+  display: block;
+  height: 1px;
+  background: var(--black);
+}
+
+.menu-icon {
+  position: relative;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.menu-icon::before {
+  top: -6px;
+}
+
+.menu-icon::after {
+  top: 6px;
+}
+
+.site-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  align-items: start;
+  width: 100%;
+  height: 50%;
+  padding-top: 12px;
+  padding-bottom: 48px;
+  background: color-mix(in srgb, var(--pink) 90%, transparent);
+}
+
+.site-menu .site-nav {
+  grid-column: 5 / 9;
+  display: grid;
+  gap: 4px;
+  justify-items: start;
+}
+
+.site-menu[hidden] {
+  display: none;
+}
+
+/* Home ----------------------------------------------- */
+.page-home {
+  height: 100vh;
+  background: url("/home/background.png") center / cover no-repeat;
+}
+
+.page-home .site-header {
+  align-items: start;
+  width: 100%;
+  height: 50%;
+  min-height: 0;
+  padding-bottom: 48px;
+  background: color-mix(in srgb, var(--pink) 90%, transparent);
+}
+
+.page-home .site-nav {
+  display: grid;
+  gap: 4px;
+  justify-items: start;
+}
+
+.home-photo {
+  height: 50%;
+  background: transparent;
+}
+
+/* Artist and Exhibition ------------------------------ */
+.page-artist {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.artist-layout {
+  flex: 1;
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+  min-height: 0;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.artist-photo {
+  grid-column: 1 / 5;
+  align-self: start;
+  margin: 0;
+}
+
+.artist-photo img {
+  width: 100%;
+  height: auto;
+}
+
+.artist-text {
+  grid-column: 5 / 9;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  scrollbar-width: none;
+}
+
+.artist-text::-webkit-scrollbar {
+  display: none;
+}
+
+.artist-reference {
+  grid-column: 9 / 13;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  color: color-mix(in srgb, var(--text) 50%, transparent);
+  font-size: 15px;
+  line-height: 140%;
+}
+
+.artist-reference p {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 8px;
+  margin: 0;
+}
+
+.artist-reference p:not(:has(.ref-num)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.artist-reference .ref-body {
+  overflow-wrap: anywhere;
+}
+
+/* Works ---------------------------------------------- */
+.page-works {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.works-layout {
+  flex: 1;
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+  min-height: 0;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.works-grid {
+  grid-column: 1 / 9;
+  display: grid;
+  grid-template-columns: repeat(20, minmax(0, 1fr));
+  grid-auto-rows: auto;
+  gap: 1px;
+  align-content: start;
+}
+
+.works-grid button {
+  aspect-ratio: 44.75 / 33.31;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  line-height: 0;
+}
+
+.works-grid button {
+  cursor: pointer;
+}
+
+.works-grid button[aria-pressed="true"] {
+  outline: 1px solid var(--black);
+  outline-offset: -1px;
+}
+
+.works-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.work-detail {
+  grid-column: 9 / 13;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.work-photo {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+}
+
+.work-photo img {
+  width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: left top;
+}
+
+.work-meta {
+  display: grid;
+  gap: 6px;
+  margin: 28px 0 0;
+}
+
+.work-meta div {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 16px;
+}
+
+.work-meta dt,
+.work-meta dd {
+  margin: 0;
+}
+
+.work-meta dt {
+  color: color-mix(in srgb, var(--text) 30%, transparent);
+}
+
+.work-meta dd {
+  white-space: pre-wrap;
+  color: color-mix(in srgb, var(--text) 50%, transparent);
+}
+
+/* Event ---------------------------------------------- */
+.event-layout {
+  min-height: calc(100vh - 80px);
+}
+
+/* 푸터 ------------------------------------------------ */
+.site-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  min-height: 72px;
+  background: var(--black);
+}
+
+.part-link {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  min-height: 72px;
+  /* 9번째 칸의 왼쪽 선. 1–8칸은 위의 작품 목록과 같은 위치 */
+  margin-left: calc(var(--margin) + 8 * var(--column) + 8 * var(--gutter));
+  padding: 16px var(--margin);
+  background: var(--pink);
+}
+
+.page-artist .site-footer,
+.page-works .site-footer {
+  height: 36px;
+  min-height: 36px;
+  background: var(--pink);
+}
+
+.page-artist .site-footer::before,
+.page-works .site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(100% * var(--progress, 0));
+  background: var(--black);
+}
+
+.page-artist .part-link,
+.page-works .part-link {
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  width: 100%;
+  height: 36px;
+  min-height: 36px;
+  margin-left: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  background: transparent;
+}
+
+.page-artist .part-label,
+.page-works .part-label {
+  color: var(--text);
+}
+
+/* 검은 fill과 겹치는 구간만 pink 글자가 보이게 자른다. */
+.page-artist .part-label-on-fill,
+.page-works .part-label-on-fill {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-inline: var(--margin);
+  color: var(--pink);
+  pointer-events: none;
+  clip-path: inset(0 calc((1 - var(--progress, 0)) * 100%) 0 0);
+}
